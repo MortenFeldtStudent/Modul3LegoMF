@@ -39,6 +39,10 @@ public class LogicFacade {
         return orders;
     }
     
+    public static OrderDetails getOrderFromDB(User user, int order_id) throws OrderException {
+        return DataMapper.getOrderDetails(user, order_id);
+    }
+    
     public static BrickList calcBrickList(int length, int wide, int heigth){       
         int[] listCountBrick2x4 = {0,0,0,0,0}; //side1 (For), side2 (Bag), side3 (Side), side4 (Side), total (alle lag)
         int[] listCountBrick2x2 = {0,0,0,0,0}; //side1 (For), side2 (Bag), side3 (Side), side4 (Side), total (alle lag)

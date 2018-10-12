@@ -129,4 +129,30 @@ public class DataMapper {
             throw new OrderException(ex.getMessage());
         }
     }
+
+    public static OrderDetails getOrderDetails(User user, int order_id) throws OrderException {
+        try {
+            Connection con = DBConnector.connection();
+            String SQL = SQL_USER_GET_ORDER_DETAILS;
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setInt(1, user.getId());
+            ps.setInt(2, order_id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int orderid = rs.getInt("order_id");
+                int height = rs.getInt("height");
+                int wide = rs.getInt("wide");
+                int length = rs.getInt("length");
+                String username = rs.getString("email");
+                String orderDate = rs.getString("orderdate");
+                String shippedDate = rs.getString("shipped");
+                OrderDetails orderDetails = new OrderDetails(orderid, height, wide, length, username, orderDate, shippedDate);
+                return orderDetails;
+            } else {
+                throw new OrderException("Email findes ikke!");
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            throw new OrderException(ex.getMessage());
+        }
+    }
 }

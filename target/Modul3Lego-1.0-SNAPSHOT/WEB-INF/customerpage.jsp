@@ -41,7 +41,7 @@
         <table>
             <tr>
                 <td>
-                    <form method="POST" action="Control">
+                    <form name="showorderdetails" action="FrontController" method="POST">
                         <input type="hidden" name="command" value="showorderdetails" >
                         <select name="order_id">
                             <%
@@ -53,7 +53,6 @@
                             %>
                         </select>
                         <br><br>
-                        <input type="hidden" name="command" value="showorderdetails" >
                         <input type="submit" value="Vis valgte bestilling">
                     </form>
                 </td>
