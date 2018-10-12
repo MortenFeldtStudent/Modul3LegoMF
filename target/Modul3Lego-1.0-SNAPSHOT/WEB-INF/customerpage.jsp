@@ -4,6 +4,7 @@
     Author     : kasper
 --%>
 
+<%@page import="FunctionLayer.Orders"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -12,7 +13,8 @@
         <title>Lego House</title>
     </head>
     <body>
-        <h1>Order Lego House</h1>
+        <% Orders orders = (Orders) request.getSession().getAttribute("orders");%>
+        <h1>Bestil Lego Hus</h1>
 
         <table>
             <tr>
@@ -33,12 +35,40 @@
                 </td>
             </tr>
         </table>
+        <br><br><br>
+
+        <h1>Tidligere bestillinger</h1>
+        <table>
+            <tr>
+                <td>
+                    <form method="POST" action="Control">
+                        <input type="hidden" name="command" value="showorderdetails" >
+                        <select name="order_id">
+                            <%
+                                if (orders != null) {
+                                    for (Integer order_id : orders.getListOrders()) {
+                                        out.println("<option value=\"" + order_id + "\">BestillingID: " + order_id + "</option>");
+                                    }
+                                }
+                            %>
+                        </select>
+                        <br><br>
+                        <input type="hidden" name="command" value="showorderdetails" >
+                        <input type="submit" value="Vis valgte bestilling">
+                    </form>
+                </td>
+            </tr>
+        </table>
+
+
+
+
         <%
             String error = (String) request.getAttribute("error");
             if (error != null) {
                 out.println("<H2>Fejl!!</h2>");
                 out.println(error);
-            } 
+            }
         %>
     </body>
 </html>

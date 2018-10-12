@@ -7,7 +7,7 @@ package PresentationLayer;
 
 import FunctionLayer.CreateUserException;
 import FunctionLayer.LoginUserException;
-import FunctionLayer.CreateOrderException;
+import FunctionLayer.OrderException;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -40,7 +40,7 @@ public class FrontController extends HttpServlet {
         } catch ( LoginUserException | CreateUserException ex ) {
             request.setAttribute( "error", ex.getMessage() );
             request.getRequestDispatcher( "index.jsp" ).forward( request, response );
-        } catch ( CreateOrderException ex ) {
+        } catch ( OrderException ex ) {
             request.setAttribute( "error", ex.getMessage() );
             request.getRequestDispatcher( "/WEB-INF/customerpage.jsp" ).forward( request, response );
         }

@@ -1,8 +1,10 @@
 package DBAccess;
 
-import FunctionLayer.CreateOrderException;
+import FunctionLayer.OrderException;
 import FunctionLayer.CreateUserException;
 import FunctionLayer.LoginUserException;
+import FunctionLayer.OrderDetails;
+import FunctionLayer.Orders;
 import FunctionLayer.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,9 +21,12 @@ public class DataMapper {
 
     private static final String SQL_USER_CREATE = "INSERT INTO users (email, password, role) VALUES (?, ?, ?)";
     private static final String SQL_USER_LOGIN = "SELECT user_id, role FROM users WHERE email=? AND password=?";
-    private static final String SQL_USER_GET_ORDERS_NOT_SHIPPED = "SELECT orders.order_id, email, orderdate, shipped, length, wide, height FROM orders JOIN order_details ON orders.order_id = order_details.order_id JOIN users ON users.user_id = orders.user_id WHERE users.user_id = ? AND orders.shipped IS NULL ORDER BY order_id ASC";
-    private static final String SQL_USER_GET_ORDERS_SHIPPED = "SELECT orders.order_id, email, orderdate, shipped, length, wide, height FROM orders JOIN order_details ON orders.order_id = order_details.order_id JOIN users ON users.user_id = orders.user_id WHERE users.user_id = ? AND orders.shipped IS NOT NULL ORDER BY order_id ASC";
-    private static final String SQL_USER_UPDATE_SHIPPED_ON_ORDERS = "UPDATE orders SET orders.shipped = current_timestamp()";
+//    private static final String SQL_USER_GET_ORDERS_NOT_SHIPPED = "SELECT orders.order_id, email, orderdate, shipped, length, wide, height FROM orders JOIN order_details ON orders.order_id = order_details.order_id JOIN users ON users.user_id = orders.user_id WHERE users.user_id = ? AND orders.shipped IS NULL ORDER BY order_id ASC";
+//    private static final String SQL_USER_GET_ORDERS_SHIPPED = "SELECT orders.order_id, email, orderdate, shipped, length, wide, height FROM orders JOIN order_details ON orders.order_id = order_details.order_id JOIN users ON users.user_id = orders.user_id WHERE users.user_id = ? AND orders.shipped IS NOT NULL ORDER BY order_id ASC";
+    private static final String SQL_USER_GET_ALL_ORDERS = "SELECT order_id FROM orders WHERE user_id = ? ORDER BY order_id ASC";
+    private static final String SQL_USER_GET_ORDER_DETAILS = "SELECT orders.order_id, email, orderdate, shipped, length, wide, height FROM orders JOIN order_details ON orders.order_id = order_details.order_id JOIN users ON users.user_id = orders.user_id WHERE users.user_id = ? AND orders.order_id = ?";
+    private static final String SQL_EMPLOYEE_GET_ALL_ORDERS = "SELECT order_id FROM orders ORDER BY order_id ASC";
+    private static final String SQL_EMPLOYEE_UPDATE_SHIPPED_ON_ORDER = "UPDATE orders SET orders.shipped = current_timestamp() WHERE order_id=?";
     private static final String SQL_INSERT_ORDER = "INSERT INTO orders (user_id) VALUES (?)";
     private static final String SQL_INSERT_ORDER_DETAILS = "INSERT INTO order_details (order_id, length, wide, height) VALUES (?, ?, ?, ?);";
 
@@ -65,7 +70,7 @@ public class DataMapper {
         }
     }
 
-    public static void createOrder(User user, int length, int wide, int height) throws CreateOrderException {
+    public static int createOrder(User user, int length, int wide, int height) throws OrderException {
         try {
             Connection con = DBConnector.connection();
             PreparedStatement orderPstmt = con.prepareStatement(SQL_INSERT_ORDER, Statement.RETURN_GENERATED_KEYS);
@@ -89,9 +94,10 @@ public class DataMapper {
                 } else {
                     con.rollback();
                 }
+                return orderId;
             } catch (SQLException ex) {
                 con.rollback();
-                throw new CreateOrderException(ex.getMessage());
+                throw new OrderException(ex.getMessage());
             } finally {
                 con.setAutoCommit(true);
                 if (orderPstmt != null) {
@@ -102,8 +108,25 @@ public class DataMapper {
                 }
             }
         } catch (ClassNotFoundException | SQLException ex) {
-            throw new CreateOrderException(ex.getMessage());
+            throw new OrderException(ex.getMessage());
         }
     }
 
+    public static Orders getOrders(User user) throws OrderException {
+        try {
+            Connection con = DBConnector.connection();
+            String SQL = SQL_USER_GET_ALL_ORDERS;
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setInt(1, user.getId());
+            ResultSet rs = ps.executeQuery();
+            Orders orders = new Orders();
+            while (rs.next()) {
+                int order_id = rs.getInt("order_id");
+                orders.addIntToList(order_id);
+            }
+            return orders;
+        } catch (ClassNotFoundException | SQLException ex) {
+            throw new OrderException(ex.getMessage());
+        }
+    }
 }

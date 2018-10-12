@@ -21,8 +21,22 @@ public class LogicFacade {
         return user;
     }
 
-    public static void createOrder(User user, int length, int wide, int heigth) throws CreateOrderException {
-        DataMapper.createOrder(user, length, wide, heigth);
+    public static int createOrder(User user, int length, int wide, int heigth) throws OrderException {
+        return DataMapper.createOrder(user, length, wide, heigth);
+    }
+    
+    public static Orders getOrders(User user) throws OrderException {
+        return DataMapper.getOrders(user);
+    }
+    
+    public static Orders isThisFirstOrder(Orders orders){
+        if(orders == null) return new Orders();
+        return orders;
+    }
+    
+    public static Orders addOrderIdToOrders(Orders orders, int order_id){
+        orders.addIntToList(order_id);
+        return orders;
     }
     
     public static BrickList calcBrickList(int length, int wide, int heigth){       

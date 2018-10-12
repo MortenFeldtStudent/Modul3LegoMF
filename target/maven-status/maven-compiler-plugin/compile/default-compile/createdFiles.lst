@@ -1,6 +1,5 @@
 PresentationLayer\UnknownCommand.class
 FunctionLayer\Layer.class
-FunctionLayer\CreateOrderException.class
 FunctionLayer\LoginUserException.class
 DBAccess\DataMapper.class
 FunctionLayer\User.class

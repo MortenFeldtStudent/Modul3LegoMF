@@ -2,7 +2,7 @@ package PresentationLayer;
 
 import FunctionLayer.CreateUserException;
 import FunctionLayer.LoginUserException;
-import FunctionLayer.CreateOrderException;
+import FunctionLayer.OrderException;
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,5 +28,5 @@ abstract class Command {
     }
 
     abstract String execute( HttpServletRequest request, HttpServletResponse response ) 
-            throws LoginUserException, CreateUserException, CreateOrderException;
+            throws LoginUserException, CreateUserException, OrderException;
 }

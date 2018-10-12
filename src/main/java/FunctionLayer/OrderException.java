@@ -4,9 +4,9 @@ package FunctionLayer;
  * The purpose of LoginException is to...
  * @author kasper
  */
-public class CreateOrderException extends Exception {
+public class OrderException extends Exception {
 
-    public CreateOrderException(String msg) {
+    public OrderException(String msg) {
         super(msg);
     }
     
