@@ -13,6 +13,11 @@
         <title>Lego House</title>
     </head>
     <body>
+        <form name="logout" action="FrontController" method="POST">
+            <input type="hidden" name="command" value="logout">
+            <input type="submit" value="Logud">
+        </form>
+        
         <% BrickList brickList = (BrickList) request.getAttribute("bricklist"); %>
 
         <h1>Bestilling af Lego Hus</h1>

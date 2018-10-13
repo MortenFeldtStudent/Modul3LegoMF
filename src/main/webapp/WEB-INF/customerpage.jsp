@@ -13,6 +13,10 @@
         <title>Lego House</title>
     </head>
     <body>
+        <form name="logout" action="FrontController" method="POST">
+            <input type="hidden" name="command" value="logout">
+            <input type="submit" value="Logud">
+        </form>
         <% Orders orders = (Orders) request.getSession().getAttribute("orders");%>
         <h1>Bestil Lego Hus</h1>
 
@@ -37,6 +41,9 @@
         </table>
         <br><br><br>
 
+        <%
+            if (orders != null) {
+        %>
         <h1>Tidligere bestillinger</h1>
         <table>
             <tr>
@@ -44,12 +51,10 @@
                     <form name="showorderdetails" action="FrontController" method="POST">
                         <input type="hidden" name="command" value="showorderdetails" >
                         <select name="order_id">
-                            <%
-                                if (orders != null) {
-                                    for (Integer order_id : orders.getListOrders()) {
-                                        out.println("<option value=\"" + order_id + "\">BestillingID: " + order_id + "</option>");
-                                    }
+                            <%                                for (Integer order_id : orders.getListOrders()) {
+                                    out.println("<option value=\"" + order_id + "\">BestillingID: " + order_id + "</option>");
                                 }
+
                             %>
                         </select>
                         <br><br>
@@ -58,7 +63,12 @@
                 </td>
             </tr>
         </table>
-
+        <%                            } else {
+        %>
+        <h1>Ingen tidligere bestillinger!</h1>
+        <%
+            }
+        %>
 
 
 

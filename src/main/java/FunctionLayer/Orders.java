@@ -10,6 +10,10 @@ public class Orders {
     public Orders() {
         listOrders = new ArrayList();
     }
+    
+    public Orders(List<Integer> listOrders) {
+        this.listOrders = listOrders;
+    }
 
     public List<Integer> getListOrders() {
         return listOrders;

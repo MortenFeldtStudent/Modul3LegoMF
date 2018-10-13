@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataMapper {
 
@@ -108,16 +110,17 @@ public class DataMapper {
     public static Orders getOrders(User user) throws OrderException {
         try {
             Connection con = DBConnector.connection();
+            List<Integer> listOrdersId = new ArrayList();
             String SQL = SQL_USER_GET_ALL_ORDERS;
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setInt(1, user.getId());
             ResultSet rs = ps.executeQuery();
-            Orders orders = new Orders();
+            if(!rs.next()) return null;
             while (rs.next()) {
                 int order_id = rs.getInt("order_id");
-                orders.addIntToList(order_id);
+                listOrdersId.add(order_id);
             }
-            return orders;
+            return new Orders(listOrdersId);
         } catch (ClassNotFoundException | SQLException ex) {
             throw new OrderException(ex.getMessage());
         }

@@ -13,6 +13,11 @@
         <title>Lego House</title>
     </head>
     <body>
+        <form name="logout" action="FrontController" method="POST">
+            <input type="hidden" name="command" value="logout">
+            <input type="submit" value="Logud">
+        </form>
+        
         <% int order_id = (int) request.getAttribute("order_id"); %>
         <% String email = (String) request.getAttribute("email"); %>
         <% String orderDate = (String) request.getAttribute("orderdate"); %>
