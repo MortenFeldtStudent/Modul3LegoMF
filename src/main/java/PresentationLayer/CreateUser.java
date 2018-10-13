@@ -2,7 +2,6 @@ package PresentationLayer;
 
 import FunctionLayer.CreateUserException;
 import FunctionLayer.LogicFacade;
-import FunctionLayer.LoginUserException;
 import FunctionLayer.User;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

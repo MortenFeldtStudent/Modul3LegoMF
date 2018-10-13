@@ -1,9 +1,5 @@
 package FunctionLayer;
 
-/**
- * The purpose of User is to...
- * @author kasper
- */
 public class User {
 
     private int id;

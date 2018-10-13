@@ -12,17 +12,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-/**
- * The purpose of DataMapper is to...
- *
- * @author kasper
- */
 public class DataMapper {
 
     private static final String SQL_USER_CREATE = "INSERT INTO users (email, password, role) VALUES (?, ?, ?)";
     private static final String SQL_USER_LOGIN = "SELECT user_id, role FROM users WHERE email=? AND password=?";
-//    private static final String SQL_USER_GET_ORDERS_NOT_SHIPPED = "SELECT orders.order_id, email, orderdate, shipped, length, wide, height FROM orders JOIN order_details ON orders.order_id = order_details.order_id JOIN users ON users.user_id = orders.user_id WHERE users.user_id = ? AND orders.shipped IS NULL ORDER BY order_id ASC";
-//    private static final String SQL_USER_GET_ORDERS_SHIPPED = "SELECT orders.order_id, email, orderdate, shipped, length, wide, height FROM orders JOIN order_details ON orders.order_id = order_details.order_id JOIN users ON users.user_id = orders.user_id WHERE users.user_id = ? AND orders.shipped IS NOT NULL ORDER BY order_id ASC";
     private static final String SQL_USER_GET_ALL_ORDERS = "SELECT order_id FROM orders WHERE user_id = ? ORDER BY order_id ASC";
     private static final String SQL_USER_GET_ORDER_DETAILS = "SELECT orders.order_id, email, orderdate, shipped, length, wide, height FROM orders JOIN order_details ON orders.order_id = order_details.order_id JOIN users ON users.user_id = orders.user_id WHERE users.user_id = ? AND orders.order_id = ?";
     private static final String SQL_EMPLOYEE_GET_ALL_ORDERS = "SELECT order_id FROM orders ORDER BY order_id ASC";

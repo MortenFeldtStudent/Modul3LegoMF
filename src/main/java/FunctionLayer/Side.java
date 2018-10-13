@@ -1,4 +1,3 @@
-
 package FunctionLayer;
 
 public class Side {
