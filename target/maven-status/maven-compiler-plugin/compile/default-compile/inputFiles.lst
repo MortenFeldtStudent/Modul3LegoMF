@@ -4,9 +4,9 @@ C:\Users\morte\Documents\Dokumentation\2. Semester\Modul_3\Uge 1 - Arkitektur\Gi
 C:\Users\morte\Documents\Dokumentation\2. Semester\Modul_3\Uge 1 - Arkitektur\Git\Modul3LegoMF\src\main\java\PresentationLayer\Order.java
 C:\Users\morte\Documents\Dokumentation\2. Semester\Modul_3\Uge 1 - Arkitektur\Git\Modul3LegoMF\src\main\java\FunctionLayer\Layer.java
 C:\Users\morte\Documents\Dokumentation\2. Semester\Modul_3\Uge 1 - Arkitektur\Git\Modul3LegoMF\src\main\java\FunctionLayer\OrderDetails.java
+C:\Users\morte\Documents\Dokumentation\2. Semester\Modul_3\Uge 1 - Arkitektur\Git\Modul3LegoMF\src\main\java\FunctionLayer\OrderShipException.java
 C:\Users\morte\Documents\Dokumentation\2. Semester\Modul_3\Uge 1 - Arkitektur\Git\Modul3LegoMF\src\main\java\PresentationLayer\Logout.java
 C:\Users\morte\Documents\Dokumentation\2. Semester\Modul_3\Uge 1 - Arkitektur\Git\Modul3LegoMF\src\main\java\PresentationLayer\Command.java
-C:\Users\morte\Documents\Dokumentation\2. Semester\Modul_3\Uge 1 - Arkitektur\Git\Modul3LegoMF\src\main\java\PresentationLayer\Customer.java
 C:\Users\morte\Documents\Dokumentation\2. Semester\Modul_3\Uge 1 - Arkitektur\Git\Modul3LegoMF\src\main\java\FunctionLayer\BrickList.java
 C:\Users\morte\Documents\Dokumentation\2. Semester\Modul_3\Uge 1 - Arkitektur\Git\Modul3LegoMF\src\main\java\PresentationLayer\OrderFromDB.java
 C:\Users\morte\Documents\Dokumentation\2. Semester\Modul_3\Uge 1 - Arkitektur\Git\Modul3LegoMF\src\main\java\DBAccess\DataMapper.java
@@ -18,5 +18,7 @@ C:\Users\morte\Documents\Dokumentation\2. Semester\Modul_3\Uge 1 - Arkitektur\Gi
 C:\Users\morte\Documents\Dokumentation\2. Semester\Modul_3\Uge 1 - Arkitektur\Git\Modul3LegoMF\src\main\java\FunctionLayer\Side.java
 C:\Users\morte\Documents\Dokumentation\2. Semester\Modul_3\Uge 1 - Arkitektur\Git\Modul3LegoMF\src\main\java\FunctionLayer\Orders.java
 C:\Users\morte\Documents\Dokumentation\2. Semester\Modul_3\Uge 1 - Arkitektur\Git\Modul3LegoMF\src\main\java\PresentationLayer\CreateUser.java
+C:\Users\morte\Documents\Dokumentation\2. Semester\Modul_3\Uge 1 - Arkitektur\Git\Modul3LegoMF\src\main\java\PresentationLayer\OrderToShip.java
+C:\Users\morte\Documents\Dokumentation\2. Semester\Modul_3\Uge 1 - Arkitektur\Git\Modul3LegoMF\src\main\java\PresentationLayer\PageGoTo.java
 C:\Users\morte\Documents\Dokumentation\2. Semester\Modul_3\Uge 1 - Arkitektur\Git\Modul3LegoMF\src\main\java\PresentationLayer\FrontController.java
 C:\Users\morte\Documents\Dokumentation\2. Semester\Modul_3\Uge 1 - Arkitektur\Git\Modul3LegoMF\src\main\java\PresentationLayer\LoginUser.java

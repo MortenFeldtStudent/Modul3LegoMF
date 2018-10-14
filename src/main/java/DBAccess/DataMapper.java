@@ -4,6 +4,7 @@ import FunctionLayer.OrderException;
 import FunctionLayer.CreateUserException;
 import FunctionLayer.LoginUserException;
 import FunctionLayer.OrderDetails;
+import FunctionLayer.OrderShipException;
 import FunctionLayer.Orders;
 import FunctionLayer.User;
 import java.sql.Connection;
@@ -21,6 +22,8 @@ public class DataMapper {
     private static final String SQL_USER_GET_ALL_ORDERS = "SELECT order_id FROM orders WHERE user_id = ? ORDER BY order_id ASC";
     private static final String SQL_USER_GET_ORDER_DETAILS = "SELECT orders.order_id, email, orderdate, shipped, length, wide, height FROM orders JOIN order_details ON orders.order_id = order_details.order_id JOIN users ON users.user_id = orders.user_id WHERE users.user_id = ? AND orders.order_id = ?";
     private static final String SQL_EMPLOYEE_GET_ALL_ORDERS = "SELECT order_id FROM orders ORDER BY order_id ASC";
+    private static final String SQL_EMPLOYEE_GET_ORDER_DETAILS = "SELECT orders.order_id, email, orderdate, shipped, length, wide, height FROM orders JOIN order_details ON orders.order_id = order_details.order_id JOIN users ON users.user_id = orders.user_id WHERE orders.order_id = ?";
+    private static final String SQL_EMPLOYEE_GET_ORDERS_NOT_SHIPPED = "SELECT order_id FROM orders WHERE shipped IS NULL ORDER BY order_id ASC";
     private static final String SQL_EMPLOYEE_UPDATE_SHIPPED_ON_ORDER = "UPDATE orders SET orders.shipped = current_timestamp() WHERE order_id=?";
     private static final String SQL_INSERT_ORDER = "INSERT INTO orders (user_id) VALUES (?)";
     private static final String SQL_INSERT_ORDER_DETAILS = "INSERT INTO order_details (order_id, length, wide, height) VALUES (?, ?, ?, ?);";
@@ -125,6 +128,42 @@ public class DataMapper {
             throw new OrderException(ex.getMessage());
         }
     }
+    
+    public static Orders getOrdersEmployee() throws OrderException {
+        try {
+            Connection con = DBConnector.connection();
+            List<Integer> listOrdersId = new ArrayList();
+            String SQL = SQL_EMPLOYEE_GET_ALL_ORDERS;
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ResultSet rs = ps.executeQuery();
+            if(!rs.next()) return null;
+            while (rs.next()) {
+                int order_id = rs.getInt("order_id");
+                listOrdersId.add(order_id);
+            }
+            return new Orders(listOrdersId);
+        } catch (ClassNotFoundException | SQLException ex) {
+            throw new OrderException(ex.getMessage());
+        }
+    }
+    
+    public static Orders getOrdersNotShippedEmployee() throws OrderException {
+        try {
+            Connection con = DBConnector.connection();
+            List<Integer> listOrdersId = new ArrayList();
+            String SQL = SQL_EMPLOYEE_GET_ORDERS_NOT_SHIPPED;
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ResultSet rs = ps.executeQuery();
+            if(!rs.next()) return null;
+            while (rs.next()) {
+                int order_id = rs.getInt("order_id");
+                listOrdersId.add(order_id);
+            }
+            return new Orders(listOrdersId);
+        } catch (ClassNotFoundException | SQLException ex) {
+            throw new OrderException(ex.getMessage());
+        }
+    }
 
     public static OrderDetails getOrderDetails(User user, int order_id) throws OrderException {
         try {
@@ -149,6 +188,43 @@ public class DataMapper {
             }
         } catch (ClassNotFoundException | SQLException ex) {
             throw new OrderException(ex.getMessage());
+        }
+    }
+    
+    public static OrderDetails getOrderDetailsEmployee(int order_id) throws OrderException {
+        try {
+            Connection con = DBConnector.connection();
+            String SQL = SQL_EMPLOYEE_GET_ORDER_DETAILS;
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setInt(1, order_id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int orderid = rs.getInt("order_id");
+                int height = rs.getInt("height");
+                int wide = rs.getInt("wide");
+                int length = rs.getInt("length");
+                String username = rs.getString("email");
+                String orderDate = rs.getString("orderdate");
+                String shippedDate = rs.getString("shipped");
+                OrderDetails orderDetails = new OrderDetails(orderid, height, wide, length, username, orderDate, shippedDate);
+                return orderDetails;
+            } else {
+                throw new OrderException("Email findes ikke!");
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            throw new OrderException(ex.getMessage());
+        }
+    }
+    
+    public static void orderToShip(int order_id) throws OrderShipException {
+        try {
+            Connection con = DBConnector.connection();
+            String SQL = SQL_EMPLOYEE_UPDATE_SHIPPED_ON_ORDER;
+            PreparedStatement ps = con.prepareStatement(SQL);
+            ps.setInt(1, order_id);
+            ps.executeUpdate();
+        } catch (SQLException | ClassNotFoundException ex) {
+            throw new OrderShipException(ex.getMessage());
         }
     }
 }

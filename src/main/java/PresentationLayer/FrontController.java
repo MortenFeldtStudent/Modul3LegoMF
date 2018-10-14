@@ -3,6 +3,7 @@ package PresentationLayer;
 import FunctionLayer.CreateUserException;
 import FunctionLayer.LoginUserException;
 import FunctionLayer.OrderException;
+import FunctionLayer.OrderShipException;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,6 +39,9 @@ public class FrontController extends HttpServlet {
         } catch (OrderException ex) {
             request.setAttribute("error", ex.getMessage());
             request.getRequestDispatcher("/WEB-INF/customerpage.jsp").forward(request, response);
+        } catch (OrderShipException ex) {
+            request.setAttribute("error", ex.getMessage());
+            request.getRequestDispatcher("/WEB-INF/employeepage.jsp").forward(request, response);
         }
     }
 

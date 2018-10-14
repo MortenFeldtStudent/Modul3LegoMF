@@ -25,7 +25,21 @@ public class LogicFacade {
     }
 
     public static Orders getOrders(User user) throws OrderException {
-        return DataMapper.getOrders(user);
+        if (user.getRole().equals("customer")) {
+            return DataMapper.getOrders(user);
+        }
+        if (user.getRole().equals("employee")) {
+            return DataMapper.getOrdersEmployee();
+        }
+        return null;
+    }
+
+    public static Orders getOrdersNotShipped() throws OrderException {
+        return DataMapper.getOrdersNotShippedEmployee();
+    }
+    
+    public static void orderShipped(int order_id) throws OrderShipException {
+        DataMapper.orderToShip(order_id);
     }
 
     public static Orders isThisFirstOrder(Orders orders) {
@@ -41,7 +55,13 @@ public class LogicFacade {
     }
 
     public static OrderDetails getOrderFromDB(User user, int order_id) throws OrderException {
-        return DataMapper.getOrderDetails(user, order_id);
+        if (user.getRole().equals("customer")) {
+            return DataMapper.getOrderDetails(user, order_id);
+        }
+        if (user.getRole().equals("employee")) {
+            return DataMapper.getOrderDetailsEmployee(order_id);
+        }
+        return null;
     }
 
     public static BrickList calcBrickList(int length, int wide, int heigth) {
