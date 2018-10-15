@@ -6,6 +6,7 @@ import FunctionLayer.Orders;
 import FunctionLayer.User;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class PageGoTo extends Command {
 
@@ -14,9 +15,10 @@ public class PageGoTo extends Command {
 
     @Override
     String execute(HttpServletRequest request, HttpServletResponse response) throws OrderException {
-        User user = (User) request.getSession().getAttribute("user");
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
 
-        if (!user.getRole().equals("customer")) {
+        if (!user.getRole().equals(LogicFacade.getCUSTOMER())) {
             Orders orders = LogicFacade.getOrders(user);
             Orders ordersNotShipped = LogicFacade.getOrdersNotShipped();
 

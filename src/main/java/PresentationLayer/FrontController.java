@@ -5,6 +5,7 @@ import FunctionLayer.LoginUserException;
 import FunctionLayer.OrderException;
 import FunctionLayer.OrderShipException;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,7 +34,7 @@ public class FrontController extends HttpServlet {
             } else {
                 request.getRequestDispatcher("/WEB-INF/" + view + ".jsp").forward(request, response);
             }
-        } catch (LoginUserException | CreateUserException ex) {
+        } catch (LoginUserException | CreateUserException | NoSuchAlgorithmException ex) {
             request.setAttribute("error", ex.getMessage());
             request.getRequestDispatcher("index.jsp").forward(request, response);
         } catch (OrderException ex) {

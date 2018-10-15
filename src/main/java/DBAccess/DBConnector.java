@@ -10,19 +10,19 @@ public class DBConnector {
     private static final String USERNAME = "connect";
     private static final String PASSWORD = "connect";
     
-    private static Connection singleton;
+    private static Connection singletonCon;
     
     public static void setConnection( Connection con ) {
-        singleton = con;
+        singletonCon = con;
     }
 
     public static Connection connection() throws ClassNotFoundException, SQLException {
-        if(singleton == null){
+        if(singletonCon == null){
             Class.forName("com.mysql.jdbc.Driver");
-            singleton = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            singletonCon = DriverManager.getConnection(URL, USERNAME, PASSWORD);
         }
         
-        return singleton;
+        return singletonCon;
     }
 
 }

@@ -7,6 +7,7 @@ import FunctionLayer.Orders;
 import FunctionLayer.User;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class Order extends Command {
 
@@ -15,9 +16,9 @@ public class Order extends Command {
 
     @Override
     String execute(HttpServletRequest request, HttpServletResponse response) throws OrderException {
-        
-        Orders orders = (Orders) request.getSession().getAttribute("orders");
-        User user = (User) request.getSession().getAttribute("user");
+        HttpSession session = request.getSession();
+        Orders orders = (Orders) session.getAttribute("orders");
+        User user = (User) session.getAttribute("user");
         int height = Integer.parseInt(request.getParameter("heigth"));
         int length = Integer.parseInt(request.getParameter("length"));
         int wide = Integer.parseInt(request.getParameter("wide"));
@@ -28,7 +29,7 @@ public class Order extends Command {
         orders = LogicFacade.isThisFirstOrder(orders);
         orders = LogicFacade.addOrderIdToOrders(orders, order_id);
         
-        request.getSession().setAttribute("orders", orders);
+        session.setAttribute("orders", orders);
         
         request.setAttribute("bricklist", brickList);
         request.setAttribute("success", "Bestilling er OK og gemt i databasen!");

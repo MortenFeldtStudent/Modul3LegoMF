@@ -3,6 +3,7 @@ package PresentationLayer;
 import FunctionLayer.CreateUserException;
 import FunctionLayer.LogicFacade;
 import FunctionLayer.User;
+import java.security.NoSuchAlgorithmException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -10,7 +11,7 @@ import javax.servlet.http.HttpSession;
 public class CreateUser extends Command {
 
     @Override
-    String execute( HttpServletRequest request, HttpServletResponse response ) throws CreateUserException {
+    String execute( HttpServletRequest request, HttpServletResponse response ) throws CreateUserException, NoSuchAlgorithmException {
         String email = request.getParameter( "email" );
         String password1 = request.getParameter( "password1" );
         String password2 = request.getParameter( "password2" );

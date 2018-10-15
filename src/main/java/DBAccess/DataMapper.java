@@ -41,12 +41,12 @@ public class DataMapper {
             ids.next();
             int id = ids.getInt(1);
             user.setId(id);
-        } catch (SQLException | ClassNotFoundException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             throw new CreateUserException(ex.getMessage());
         }
     }
 
-    public static User login(String email, String password) throws LoginUserException {
+    public static User login(String email, String password) throws LoginUserException  {
         try {
             Connection con = DBConnector.connection();
             String SQL = SQL_USER_LOGIN;
@@ -57,11 +57,12 @@ public class DataMapper {
             if (rs.next()) {
                 String role = rs.getString("role");
                 int user_id = rs.getInt("user_id");
-                User user = new User(email, password, role);
+                User user = new User(email, role);
+                user.setPassword(password);
                 user.setId(user_id);
                 return user;
             } else {
-                throw new LoginUserException("Email findes ikke!");
+                throw new LoginUserException("Email eller kodeord er forkert - prøv igen!");
             }
         } catch (ClassNotFoundException | SQLException ex) {
             throw new LoginUserException(ex.getMessage());
@@ -223,7 +224,7 @@ public class DataMapper {
             PreparedStatement ps = con.prepareStatement(SQL);
             ps.setInt(1, order_id);
             ps.executeUpdate();
-        } catch (SQLException | ClassNotFoundException ex) {
+        } catch (ClassNotFoundException  | SQLException ex) {
             throw new OrderShipException(ex.getMessage());
         }
     }

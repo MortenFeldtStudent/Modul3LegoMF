@@ -9,6 +9,7 @@ public class OrderDetails {
     private String username;
     private String orderDate;
     private String shippedDate;
+    private final String ORDER_NOT_SHIPPED = "Ordre ej afsendt!";
 
     public OrderDetails(int order_id, int height, int wide, int length, String username, String orderDate, String shippedDate) {
         this.order_id = order_id;
@@ -19,7 +20,7 @@ public class OrderDetails {
         this.orderDate = orderDate;
         
         if(shippedDate == null){
-            this.shippedDate = "Ordre ej afsendt!";
+            this.shippedDate = ORDER_NOT_SHIPPED;
         } else {
             this.shippedDate = shippedDate;
         }

@@ -6,5 +6,4 @@ public class OrderShipException extends Exception {
         super(msg);
     }
     
-
 }

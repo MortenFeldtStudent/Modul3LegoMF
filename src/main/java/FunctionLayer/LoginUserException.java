@@ -6,5 +6,4 @@ public class LoginUserException extends Exception {
         super(msg);
     }
     
-
 }

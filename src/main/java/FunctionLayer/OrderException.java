@@ -6,5 +6,4 @@ public class OrderException extends Exception {
         super(msg);
     }
     
-
 }

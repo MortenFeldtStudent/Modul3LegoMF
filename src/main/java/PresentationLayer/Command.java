@@ -4,6 +4,7 @@ import FunctionLayer.CreateUserException;
 import FunctionLayer.LoginUserException;
 import FunctionLayer.OrderException;
 import FunctionLayer.OrderShipException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,5 +33,5 @@ abstract class Command {
     }
 
     abstract String execute(HttpServletRequest request, HttpServletResponse response)
-            throws LoginUserException, CreateUserException, OrderException, OrderShipException;
+            throws LoginUserException, CreateUserException, OrderException, OrderShipException, NoSuchAlgorithmException;
 }

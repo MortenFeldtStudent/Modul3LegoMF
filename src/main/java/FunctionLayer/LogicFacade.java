@@ -1,21 +1,27 @@
 package FunctionLayer;
 
 import DBAccess.DataMapper;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LogicFacade {
+    
+    private static final String CUSTOMER = "customer";
+    private static final String ENCODING_SHA256 = "SHA-256";
 
-    private static final String BRICK2x4 = "2x4";
-    private static final String BRICK2x2 = "2x2";
-    private static final String BRICK2x1 = "2x1";
-
-    public static User login(String email, String password) throws LoginUserException {
-        return DataMapper.login(email, password);
+    public static String getCUSTOMER() {
+        return CUSTOMER;
     }
 
-    public static User createUser(String email, String password) throws CreateUserException {
-        User user = new User(email, password, "customer");
+    public static User login(String email, String password) throws LoginUserException, NoSuchAlgorithmException {
+        return DataMapper.login(email, encodePasswordSHA256(password));
+    }
+
+    public static User createUser(String email, String password) throws CreateUserException, NoSuchAlgorithmException {
+        User user = new User(email, encodePasswordSHA256(password), CUSTOMER);
         DataMapper.createUser(user);
         return user;
     }
@@ -25,13 +31,12 @@ public class LogicFacade {
     }
 
     public static Orders getOrders(User user) throws OrderException {
-        if (user.getRole().equals("customer")) {
+        if (user.getRole().equals(CUSTOMER)) {
             return DataMapper.getOrders(user);
         }
-        if (user.getRole().equals("employee")) {
+        else {
             return DataMapper.getOrdersEmployee();
         }
-        return null;
     }
 
     public static Orders getOrdersNotShipped() throws OrderException {
@@ -55,13 +60,12 @@ public class LogicFacade {
     }
 
     public static OrderDetails getOrderFromDB(User user, int order_id) throws OrderException {
-        if (user.getRole().equals("customer")) {
+        if (user.getRole().equals(CUSTOMER)) {
             return DataMapper.getOrderDetails(user, order_id);
         }
-        if (user.getRole().equals("employee")) {
+        else {
             return DataMapper.getOrderDetailsEmployee(order_id);
         }
-        return null;
     }
 
     public static BrickList calcBrickList(int length, int wide, int heigth) {
@@ -186,5 +190,20 @@ public class LogicFacade {
             default:
                 return null;
         }
+    }
+    
+    public static String encodePasswordSHA256(String password) throws NoSuchAlgorithmException{
+        MessageDigest digest = MessageDigest.getInstance(ENCODING_SHA256);
+        byte[] encodedPassword = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+
+        StringBuilder passwordSHA256 = new StringBuilder();
+        for (int i : encodedPassword) {
+            if (Integer.toHexString(0xFF & i).length() == 2) {
+                passwordSHA256.append(Integer.toHexString(0xFF & i));
+            } else {
+                passwordSHA256.append(0x00).append(Integer.toHexString(0xFF & i));
+            }
+        }
+        return new String(passwordSHA256);
     }
 }
