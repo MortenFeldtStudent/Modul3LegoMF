@@ -31,8 +31,20 @@
                         Længde (Antal prikker):<br>
                         <input type="text" name="length" value="20">
                         <br><br>
-                        Dybde (Antal brikker):<br>
+                        Dybde (Antal prikker):<br>
                         <input type="text" name="wide" value="20">
+                        <br><br>
+                        Dør - Højde (Antal klodser):<br>
+                        <input type="text" name="doorHeight" value="6">
+                        <br><br>
+                        Dør - Længde (Antal prikker):<br>
+                        <input type="text" name="doorLength" value="3">
+                        <br><br>
+                        Vindue - Højde (Antal klodser):<br>
+                        <input type="text" name="windowHeight" value="5">
+                        <br><br>
+                        Vindue - Længde (Antal prikker):<br>
+                        <input type="text" name="windowLength" value="5">
                         <br><br>
                         <input type="submit" value="Bestil">
                     </form>

@@ -4,6 +4,8 @@
     Author     : kasper
 --%>
 
+<%@page import="FunctionLayer.Door"%>
+<%@page import="FunctionLayer.Window"%>
 <%@page import="FunctionLayer.BrickList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -19,6 +21,8 @@
         </form>
         
         <% BrickList brickList = (BrickList) request.getAttribute("bricklist"); %>
+        <% Door door = (Door) request.getAttribute("door"); %>
+        <% Window window = (Window) request.getAttribute("window"); %>
 
         <h1>Bestilling af Lego Hus</h1>
         
@@ -27,12 +31,24 @@
                 <th>Højde (Antal klodser)</th>
                 <th>Længde (Antal prikker)</th>
                 <th>Dybde (Antal brikker)</th>
+                <th>Dør</th>
+                <th>Vindue</th>
             </tr>
             <tr>
                 <%
                         out.println("<td>" + brickList.getHeight() + "</td>");
                         out.println("<td>" + brickList.getLength() + "</td>");
                         out.println("<td>" + brickList.getWide() + "</td>");
+                        if(brickList.isDoor()){
+                            out.println("<td>Ja</td>");
+                        } else {
+                            out.println("<td>Nej</td>");
+                        }
+                        if(brickList.isWindow()){
+                            out.println("<td>Ja</td>");
+                        } else {
+                            out.println("<td>Nej</td>");
+                        }
                 %>
             </tr>
         </table>
@@ -72,6 +88,42 @@
                 %>
             </tr>
         </table>
+                <% if(brickList.isDoor()){ %>
+                <br>
+            <br>
+        <table border="1">
+            <tr>
+                <th>Type</th>
+                <th>Højde (Antal klodser)</th>
+                <th>Længde (Antal prikker)</th>
+            </tr>
+            <tr>
+                <td>Dør</td>
+                <%
+                        out.println("<td>" + door.getHeight() + "</td>");
+                        out.println("<td>" + door.getLength() + "</td>");
+                %>
+            </tr>
+        </table>
+            <% } %>
+            <% if(brickList.isWindow()){ %>
+                <br>
+            <br>
+        <table border="1">
+            <tr>
+                <th>Type</th>
+                <th>Højde (Antal klodser)</th>
+                <th>Længde (Antal prikker)</th>
+            </tr>
+            <tr>
+                <td>Vindue</td>
+                <%
+                        out.println("<td>" + window.getHeight() + "</td>");
+                        out.println("<td>" + window.getLength() + "</td>");
+                %>
+            </tr>
+        </table>
+            <% } %>
             <br>
             <br>
         <table>

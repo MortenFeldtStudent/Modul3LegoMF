@@ -8,6 +8,16 @@ public class BrickList {
     private int[] listBricks2x4;
     private int[] listBricks2x2;
     private int[] listBricks2x1;
+    private boolean door;
+    private boolean window;
+
+    public BrickList(int height, int wide, int length) {
+        this.height = height;
+        this.wide = wide;
+        this.length = length;
+        this.door = false;
+        this.window = false;
+    }
 
     public BrickList(int height, int wide, int length, int[] listBricks2x4, int[] listBricks2x2, int[] listBricks2x1) {
         this.height = height;
@@ -16,6 +26,8 @@ public class BrickList {
         this.listBricks2x4 = listBricks2x4;
         this.listBricks2x2 = listBricks2x2;
         this.listBricks2x1 = listBricks2x1;
+        this.door = false;
+        this.window = false;
     }
 
     public int getHeight() {
@@ -64,6 +76,22 @@ public class BrickList {
 
     public void setListBricks2x1(int[] listBricks2x1) {
         this.listBricks2x1 = listBricks2x1;
+    }
+
+    public boolean isDoor() {
+        return door;
+    }
+
+    public void setDoor(boolean door) {
+        this.door = door;
+    }
+
+    public boolean isWindow() {
+        return window;
+    }
+
+    public void setWindow(boolean window) {
+        this.window = window;
     }
 
 }

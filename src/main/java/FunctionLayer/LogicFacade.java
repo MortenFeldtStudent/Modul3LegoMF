@@ -68,12 +68,17 @@ public class LogicFacade {
         }
     }
 
-    public static BrickList calcBrickList(int length, int wide, int heigth) {
+    public static BrickList calcBrickList(int length, int wide, int heigth, Door door, Window window) {
         int[] listCountBrick2x4 = {0, 0, 0, 0, 0}; //side1 (For), side2 (Bag), side3 (Side), side4 (Side), total (alle lag)
         int[] listCountBrick2x2 = {0, 0, 0, 0, 0}; //side1 (For), side2 (Bag), side3 (Side), side4 (Side), total (alle lag)
         int[] listCountBrick2x1 = {0, 0, 0, 0, 0}; //side1 (For), side2 (Bag), side3 (Side), side4 (Side), total (alle lag)
+        
+        BrickList brickList = new BrickList(heigth, wide, length);
+        
+        brickList  = doorCheckSpaceAndSet(length, heigth, door.getLength(), door.getHeight(), brickList);
+        brickList  = windowCheckSpaceAndSet(length, heigth, window.getLength(), window.getHeight(), brickList);
 
-        House house = calcHouse(length, wide, heigth);
+        House house = calcHouse(length, wide, heigth, brickList.isDoor(), brickList.isWindow(), door, window);
 
         for (int i = 0; i < house.getListLayers().size(); i++) {
             Layer layer = house.getListLayers().get(i);
@@ -90,8 +95,34 @@ public class LogicFacade {
         listCountBrick2x4 = calcTotalBricks(listCountBrick2x4);
         listCountBrick2x2 = calcTotalBricks(listCountBrick2x2);
         listCountBrick2x1 = calcTotalBricks(listCountBrick2x1);
-
-        return new BrickList(heigth, wide, length, listCountBrick2x4, listCountBrick2x2, listCountBrick2x1);
+        
+        brickList.setListBricks2x4(listCountBrick2x4);
+        brickList.setListBricks2x2(listCountBrick2x2);
+        brickList.setListBricks2x1(listCountBrick2x1);
+        
+        return brickList;
+    }
+    
+    public static BrickList doorCheckSpaceAndSet(int length, int height, int doorLength, int doorHeigth, BrickList brickList){
+        if(checkSpaceDoor(length, height, doorLength, doorHeigth)){
+            brickList.setDoor(true);
+        }
+        return brickList;
+    }
+    
+     public static BrickList windowCheckSpaceAndSet(int length, int height, int windowLength, int windowHeigth, BrickList brickList){
+        if(checkSpaceWindow(length, height, windowLength, windowHeigth)){
+            brickList.setWindow(true);
+        }
+        return brickList;
+    }
+    
+    public static boolean checkSpaceDoor(int length, int height, int doorLength, int doorHeigth){
+        return doorLength <= (length - 4) && doorHeigth < height;
+    }
+    
+    public static boolean checkSpaceWindow(int length, int height, int windowLength, int windowHeigth){
+        return windowLength <= (length - 4) && (windowHeigth + 1) < height;
     }
 
     public static int calcLayerSide(int brick, int listValue) {
@@ -109,24 +140,24 @@ public class LogicFacade {
         return list;
     }
 
-    public static House calcHouse(int length, int wide, int heigth) {
+    public static House calcHouse(int length, int wide, int heigth, boolean isDoor, boolean isWindow, Door door, Window window) {
         House house;
 
         house = new House(heigth, wide, length);
-        house.setListLayers(calcLayers(house.getLength(), house.getWide(), house.getHeight()));
+        house.setListLayers(calcLayers(house.getLength(), house.getWide(), house.getHeight(), isDoor, isWindow, door, window));
 
         return house;
     }
 
-    public static List<Layer> calcLayers(int length, int wide, int heigth) {
+    public static List<Layer> calcLayers(int length, int wide, int heigth, boolean isDoor, boolean isWindow, Door door, Window window) {
         Layer layer = null;
         List<Layer> listLayers = new ArrayList();
 
         for (int i = 0; i < heigth; i++) {
             if ((i % 2) == 0) {
-                listLayers.add(calcLayerEven(layer, length, wide));
+                listLayers.add(calcLayerEven(layer, length, wide, isDoor, isWindow, door, window, i));
             } else {
-                listLayers.add(calcLayerNotEven(layer, length, wide));
+                listLayers.add(calcLayerNotEven(layer, length, wide, isDoor, isWindow, door, window, i));
             }
 
         }
@@ -134,19 +165,41 @@ public class LogicFacade {
         return listLayers;
     }
 
-    public static Layer calcLayerEven(Layer layer, int length, int wide) {
+    public static Layer calcLayerEven(Layer layer, int length, int wide, boolean isDoor, boolean isWindow, Door door, Window window, int iterator) {
         layer = new Layer();
-        layer.addSides(calcSide(length)); //For
-        layer.addSides(calcSide(length)); //Bag
+        
+        int lengthDoor = length;
+        int lengthWindow = length;
+        
+        if(isDoor == true && iterator < door.getHeight()){
+            lengthDoor -= door.getLength();
+        }
+        if(isWindow == true && iterator < window.getHeight() && iterator > 0){
+            lengthWindow -= window.getLength();
+        }
+        
+        layer.addSides(calcSide(lengthDoor)); //For
+        layer.addSides(calcSide(lengthWindow)); //Bag
         layer.addSides(calcSide(wide - 4)); //Side
         layer.addSides(calcSide(wide - 4)); //Side
         return layer;
     }
 
-    public static Layer calcLayerNotEven(Layer layer, int length, int wide) {
+    public static Layer calcLayerNotEven(Layer layer, int length, int wide, boolean isDoor, boolean isWindow, Door door, Window window, int iterator) {
         layer = new Layer();
-        layer.addSides(calcSide(length - 4)); //For
-        layer.addSides(calcSide(length - 4)); //Bag
+        
+        int lengthDoor = length;
+        int lengthWindow = length;
+        
+        if(isDoor == true && iterator < door.getHeight()){
+            lengthDoor -= door.getLength();
+        }
+        if(isWindow == true && iterator < window.getHeight() && iterator > 0){
+            lengthWindow -= window.getLength();
+        }
+        
+        layer.addSides(calcSide(lengthDoor - 4)); //For
+        layer.addSides(calcSide(lengthWindow - 4)); //Bag
         layer.addSides(calcSide(wide)); //Side
         layer.addSides(calcSide(wide)); //Side
         return layer;
@@ -205,5 +258,13 @@ public class LogicFacade {
             }
         }
         return new String(passwordSHA256);
+    }
+    
+    public static Door createDoor(int length, int height){
+        return new Door(height, length);
+    }
+    
+    public static Window createWindow(int length, int height){
+        return new Window(height, length);
     }
 }

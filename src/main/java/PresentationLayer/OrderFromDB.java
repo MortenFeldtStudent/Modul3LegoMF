@@ -1,10 +1,12 @@
 package PresentationLayer;
 
 import FunctionLayer.BrickList;
+import FunctionLayer.Door;
 import FunctionLayer.OrderException;
 import FunctionLayer.LogicFacade;
 import FunctionLayer.OrderDetails;
 import FunctionLayer.User;
+import FunctionLayer.Window;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -21,7 +23,12 @@ public class OrderFromDB extends Command {
         int order_id = Integer.parseInt(request.getParameter("order_id"));
         
         OrderDetails orderDetails = LogicFacade.getOrderFromDB(user, order_id);
-        BrickList brickList = LogicFacade.calcBrickList(orderDetails.getLength(), orderDetails.getWide(), orderDetails.getHeight());
+        Door door = LogicFacade.createDoor(3, 6);
+        Window window = LogicFacade.createWindow(5, 5);
+        BrickList brickList = LogicFacade.calcBrickList(orderDetails.getLength(), orderDetails.getWide(), orderDetails.getHeight(), door, window);
+        
+        request.setAttribute("door", door);
+        request.setAttribute("window", window);
         
         request.setAttribute("bricklist", brickList);
         request.setAttribute("order_id", orderDetails.getOrder_id());
