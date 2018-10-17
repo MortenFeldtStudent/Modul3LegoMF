@@ -165,12 +165,12 @@ public class DataMapper {
             String SQL = SQL_EMPLOYEE_GET_ORDERS_NOT_SHIPPED;
             PreparedStatement ps = con.prepareStatement(SQL);
             ResultSet rs = ps.executeQuery();
-            if (!rs.next()) {
-                return null;
-            }
             while (rs.next()) {
                 int order_id = rs.getInt("order_id");
                 listOrdersId.add(order_id);
+            }
+            if (listOrdersId.isEmpty()) {
+                return null;
             }
             return new Orders(listOrdersId);
         } catch (ClassNotFoundException | SQLException ex) {
