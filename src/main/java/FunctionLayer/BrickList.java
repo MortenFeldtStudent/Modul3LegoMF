@@ -1,7 +1,7 @@
 package FunctionLayer;
 
 public class BrickList {
-    
+
     private int height;
     private int wide;
     private int length;
@@ -72,7 +72,7 @@ public class BrickList {
     public void setHouse(House house) {
         this.house = house;
     }
-    
+
     public int calcLayerSideBricks(int brick, int listValue) {
         return listValue += brick;
     }
@@ -87,12 +87,12 @@ public class BrickList {
 
         return list;
     }
-    
+
     public BrickList calcBrickList() {
         int[] listCountBrick2x4 = {0, 0, 0, 0, 0}; //side1 (For), side2 (Bag), side3 (Side), side4 (Side), total (alle lag)
         int[] listCountBrick2x2 = {0, 0, 0, 0, 0}; //side1 (For), side2 (Bag), side3 (Side), side4 (Side), total (alle lag)
         int[] listCountBrick2x1 = {0, 0, 0, 0, 0}; //side1 (For), side2 (Bag), side3 (Side), side4 (Side), total (alle lag)
-        
+
         house.calcLayers();
 
         for (int i = 0; i < house.getListLayers().size(); i++) {

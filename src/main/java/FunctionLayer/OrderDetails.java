@@ -1,7 +1,7 @@
 package FunctionLayer;
 
 public class OrderDetails {
-    
+
     private int order_id;
     private int height;
     private int wide;
@@ -10,16 +10,20 @@ public class OrderDetails {
     private String orderDate;
     private String shippedDate;
     private final String ORDER_NOT_SHIPPED = "Ordre ej afsendt!";
+    private Door door;
+    private Window window;
 
-    public OrderDetails(int order_id, int height, int wide, int length, String username, String orderDate, String shippedDate) {
+    public OrderDetails(int order_id, int height, int wide, int length, String username, String orderDate, String shippedDate, Door door, Window window) {
         this.order_id = order_id;
         this.height = height;
         this.wide = wide;
         this.length = length;
         this.username = username;
         this.orderDate = orderDate;
-        
-        if(shippedDate == null){
+        this.door = door;
+        this.window = window;
+
+        if (shippedDate == null) {
             this.shippedDate = ORDER_NOT_SHIPPED;
         } else {
             this.shippedDate = shippedDate;
@@ -81,5 +85,21 @@ public class OrderDetails {
     public void setShippedDate(String shippedDate) {
         this.shippedDate = shippedDate;
     }
-    
+
+    public Door getDoor() {
+        return door;
+    }
+
+    public void setDoor(Door door) {
+        this.door = door;
+    }
+
+    public Window getWindow() {
+        return window;
+    }
+
+    public void setWindow(Window window) {
+        this.window = window;
+    }
+
 }

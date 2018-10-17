@@ -6,13 +6,13 @@ public class User {
     private String email;
     private String password;
     private String role;
-    
-    public User(String email, String role) {       
+
+    public User(String email, String role) {
         this.email = email;
         this.role = role;
     }
 
-    public User(String email, String password, String role) {       
+    public User(String email, String password, String role) {
         this.email = email;
         this.password = password;
         this.role = role;

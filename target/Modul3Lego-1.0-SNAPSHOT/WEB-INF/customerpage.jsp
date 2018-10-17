@@ -1,9 +1,3 @@
-<%-- 
-    Document   : customerpage
-    Created on : Aug 22, 2017, 2:33:37 PM
-    Author     : kasper
---%>
-
 <%@page import="FunctionLayer.Orders"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -26,13 +20,13 @@
                     <form name="order" action="FrontController" method="POST">
                         <input type="hidden" name="command" value="order">
                         Højde (Antal klodser):<br>
-                        <input type="text" name="heigth" value="10">
+                        <input type="text" name="heigth">
                         <br><br>
                         Længde (Antal prikker):<br>
-                        <input type="text" name="length" value="20">
+                        <input type="text" name="length">
                         <br><br>
                         Dybde (Antal prikker):<br>
-                        <input type="text" name="wide" value="20">
+                        <input type="text" name="wide">
                         <br><br>
                         Dør - Højde (Antal klodser):<br>
                         <input type="text" name="doorHeight" value="6">

@@ -1,9 +1,3 @@
-<%-- 
-    Document   : employeepage.jsp
-    Created on : Aug 24, 2017, 6:31:57 AM
-    Author     : kasper
---%>
-
 <%@page import="FunctionLayer.Orders"%>
 <%@page import="FunctionLayer.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

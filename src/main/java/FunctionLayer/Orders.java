@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Orders {
-    
+
     private List<Integer> listOrders;
 
     public Orders() {
         listOrders = new ArrayList();
     }
-    
+
     public Orders(List<Integer> listOrders) {
         this.listOrders = listOrders;
     }
@@ -22,8 +22,8 @@ public class Orders {
     public void setListOrders(List<Integer> listOrders) {
         this.listOrders = listOrders;
     }
-    
-    public void addIntToList(int order_id){
+
+    public void addIntToList(int order_id) {
         listOrders.add(order_id);
     }
 }

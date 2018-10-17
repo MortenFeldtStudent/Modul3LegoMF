@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class House {
-    
+
     private int height;
     private int wide;
     private int length;
@@ -21,7 +21,6 @@ public class House {
         this.door = door;
         this.window = window;
     }
-
 
     public int getHeight() {
         return height;
@@ -78,36 +77,36 @@ public class House {
     public void setWindow(Window window) {
         this.window = window;
     }
-    
+
     public void checkSpaceDoorWindow() throws DoorWindowException {
         boolean checkDoor = door.getLength() <= (length - 4) && door.getHeight() < height;
         boolean checkWindow = window.getLength() <= (length - 4) && (window.getHeight() + 1) < height;
-        
-        if(!checkDoor && !checkWindow){
+
+        if (!checkDoor && !checkWindow) {
             throw new DoorWindowException("Der er ikke plads til hverken dør og vindue - tilret størrelse!");
         }
-        if(!checkDoor){
+        if (!checkDoor) {
             throw new DoorWindowException("Der er ikke plads til dør - tilret størrelse!");
         }
-        if(!checkWindow){
+        if (!checkWindow) {
             throw new DoorWindowException("Der er ikke plads til vindue - tilret størrelse!");
         }
     }
-    
+
     public void addLayer(Layer layer) {
         listLayers.add(layer);
     }
-    
+
     public Layer calcLayerOfLayers(int layerNumber) {
         layer = new Layer();
         layer.calcLayer(layerNumber, length, wide, door, window);
         return layer;
     }
-    
+
     public void calcLayers() {
         for (int i = 0; i < height; i++) {
             addLayer(calcLayerOfLayers(i));
         }
     }
-    
+
 }

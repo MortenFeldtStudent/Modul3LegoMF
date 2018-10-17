@@ -19,7 +19,7 @@ public class Layer {
     public void setSide(Side side) {
         this.side = side;
     }
-    
+
     public Layer(List<Side> listSides) {
         this.listSides = listSides;
     }

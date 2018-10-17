@@ -1,7 +1,7 @@
 package FunctionLayer;
 
 public class Window {
-    
+
     private int height;
     private int length;
 
@@ -25,5 +25,5 @@ public class Window {
     public void setLength(int length) {
         this.length = length;
     }
-    
+
 }

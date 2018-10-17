@@ -10,10 +10,10 @@ public class Logout extends Command {
     }
 
     @Override
-    String execute(HttpServletRequest request, HttpServletResponse response) {  
+    String execute(HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         session.invalidate();
         return "index";
     }
-    
+
 }

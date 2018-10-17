@@ -1,7 +1,7 @@
 package FunctionLayer;
 
 public class Door {
-    
+
     private int height;
     private int length;
 
@@ -25,5 +25,5 @@ public class Door {
     public void setLength(int length) {
         this.length = length;
     }
-    
+
 }

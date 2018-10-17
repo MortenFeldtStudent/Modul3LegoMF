@@ -1,9 +1,3 @@
-<%-- 
-    Document   : customerpage
-    Created on : Aug 22, 2017, 2:33:37 PM
-    Author     : kasper
---%>
-
 <%@page import="FunctionLayer.Window"%>
 <%@page import="FunctionLayer.Door"%>
 <%@page import="FunctionLayer.User"%>
