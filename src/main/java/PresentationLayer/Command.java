@@ -1,6 +1,7 @@
 package PresentationLayer;
 
 import FunctionLayer.CreateUserException;
+import FunctionLayer.DoorWindowException;
 import FunctionLayer.LoginUserException;
 import FunctionLayer.OrderException;
 import FunctionLayer.OrderShipException;
@@ -33,5 +34,5 @@ abstract class Command {
     }
 
     abstract String execute(HttpServletRequest request, HttpServletResponse response)
-            throws LoginUserException, CreateUserException, OrderException, OrderShipException, NoSuchAlgorithmException;
+            throws LoginUserException, CreateUserException, DoorWindowException, OrderException, OrderShipException, NoSuchAlgorithmException;
 }

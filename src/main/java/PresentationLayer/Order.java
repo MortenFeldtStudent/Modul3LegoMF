@@ -2,8 +2,11 @@ package PresentationLayer;
 
 import FunctionLayer.BrickList;
 import FunctionLayer.Door;
+import FunctionLayer.DoorWindowException;
+import FunctionLayer.House;
 import FunctionLayer.OrderException;
 import FunctionLayer.LogicFacade;
+import FunctionLayer.OrderDetails;
 import FunctionLayer.Orders;
 import FunctionLayer.User;
 import FunctionLayer.Window;
@@ -17,7 +20,7 @@ public class Order extends Command {
     }
 
     @Override
-    String execute(HttpServletRequest request, HttpServletResponse response) throws OrderException {
+    String execute(HttpServletRequest request, HttpServletResponse response) throws DoorWindowException, OrderException {
         HttpSession session = request.getSession();
         Orders orders = (Orders) session.getAttribute("orders");
         User user = (User) session.getAttribute("user");
@@ -30,22 +33,26 @@ public class Order extends Command {
         int windowHeight = Integer.parseInt(request.getParameter("windowHeight"));
         int windowLength = Integer.parseInt(request.getParameter("windowLength"));
         
-        int order_id = LogicFacade.createOrder(user, length, wide, height);
-        Door door = LogicFacade.createDoor(doorLength, doorHeight);
-        Window window = LogicFacade.createWindow(windowLength, windowHeight);
-        BrickList brickList = LogicFacade.calcBrickList(length, wide, height, door, window);
+        OrderDetails orderDetails = LogicFacade.createOrder(user, length, wide, height);
+        House house = LogicFacade.createHouse(length, wide, height, doorLength, doorHeight, windowLength, windowHeight);
+        LogicFacade.houseCheckDoorWindow(house);
+        BrickList brickList = LogicFacade.calcBrickList(house);
         
         orders = LogicFacade.isThisFirstOrder(orders);
-        orders = LogicFacade.addOrderIdToOrders(orders, order_id);
+        orders = LogicFacade.addOrderIdToOrders(orders, orderDetails.getOrder_id());
         
         session.setAttribute("orders", orders);
         
-        request.setAttribute("door", door);
-        request.setAttribute("window", window);
+        request.setAttribute("door", house.getDoor());
+        request.setAttribute("window", house.getWindow());
         request.setAttribute("bricklist", brickList);
+        request.setAttribute("order_id", orderDetails.getOrder_id());
+        request.setAttribute("email", orderDetails.getUsername());
+        request.setAttribute("orderdate", orderDetails.getOrderDate());
+        request.setAttribute("shippeddate", orderDetails.getShippedDate());
         request.setAttribute("success", "Bestilling er OK og gemt i databasen!");
         
-        return "orderpage";
+        return "orderdetailspage";
     }
     
 }

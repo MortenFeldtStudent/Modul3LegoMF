@@ -1,6 +1,5 @@
 package PresentationLayer;
 
-import FunctionLayer.BrickList;
 import FunctionLayer.LogicFacade;
 import FunctionLayer.OrderException;
 import FunctionLayer.OrderShipException;

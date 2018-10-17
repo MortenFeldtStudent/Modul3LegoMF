@@ -69,7 +69,7 @@ public class DataMapper {
         }
     }
 
-    public static int createOrder(User user, int length, int wide, int height) throws OrderException {
+    public static OrderDetails createOrder(User user, int length, int wide, int height) throws OrderException {
         try {
             Connection con = DBConnector.connection();
             PreparedStatement orderPstmt = con.prepareStatement(SQL_INSERT_ORDER, Statement.RETURN_GENERATED_KEYS);
@@ -93,7 +93,7 @@ public class DataMapper {
                 } else {
                     con.rollback();
                 }
-                return orderId;
+                return getOrderDetails(user, orderId);
             } catch (SQLException ex) {
                 con.rollback();
                 throw new OrderException(ex.getMessage());

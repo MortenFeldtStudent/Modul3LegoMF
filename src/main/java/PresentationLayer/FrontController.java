@@ -1,6 +1,7 @@
 package PresentationLayer;
 
 import FunctionLayer.CreateUserException;
+import FunctionLayer.DoorWindowException;
 import FunctionLayer.LoginUserException;
 import FunctionLayer.OrderException;
 import FunctionLayer.OrderShipException;
@@ -37,7 +38,7 @@ public class FrontController extends HttpServlet {
         } catch (LoginUserException | CreateUserException | NoSuchAlgorithmException ex) {
             request.setAttribute("error", ex.getMessage());
             request.getRequestDispatcher("index.jsp").forward(request, response);
-        } catch (OrderException ex) {
+        } catch (OrderException | DoorWindowException ex) {
             request.setAttribute("error", ex.getMessage());
             request.getRequestDispatcher("/WEB-INF/customerpage.jsp").forward(request, response);
         } catch (OrderShipException ex) {

@@ -41,8 +41,6 @@
                 <th>Højde (Antal klodser)</th>
                 <th>Længde (Antal prikker)</th>
                 <th>Dybde (Antal brikker)</th>
-                <th>Dør</th>
-                <th>Vindue</th>
             </tr>
             <tr>
                 <%
@@ -53,16 +51,6 @@
                     out.println("<td>" + brickList.getHeight() + "</td>");
                     out.println("<td>" + brickList.getLength() + "</td>");
                     out.println("<td>" + brickList.getWide() + "</td>");
-                    if(brickList.isDoor()){
-                            out.println("<td>Ja</td>");
-                        } else {
-                            out.println("<td>Nej</td>");
-                        }
-                        if(brickList.isWindow()){
-                            out.println("<td>Ja</td>");
-                        } else {
-                            out.println("<td>Nej</td>");
-                        }
                 %>
                 <%
                     if (!user.getRole().equals("customer")) {
@@ -113,42 +101,38 @@
             %>
         </tr>
     </table>
-         <% if(brickList.isDoor()){ %>
-                <br>
-            <br>
-        <table border="1">
-            <tr>
-                <th>Type</th>
-                <th>Højde (Antal klodser)</th>
-                <th>Længde (Antal prikker)</th>
-            </tr>
-            <tr>
-                <td>Dør</td>
-                <%
-                        out.println("<td>" + door.getHeight() + "</td>");
-                        out.println("<td>" + door.getLength() + "</td>");
-                %>
-            </tr>
-        </table>
-            <% } %>
-            <% if(brickList.isWindow()){ %>
-                <br>
-            <br>
-        <table border="1">
-            <tr>
-                <th>Type</th>
-                <th>Højde (Antal klodser)</th>
-                <th>Længde (Antal prikker)</th>
-            </tr>
-            <tr>
-                <td>Vindue</td>
-                <%
-                        out.println("<td>" + window.getHeight() + "</td>");
-                        out.println("<td>" + window.getLength() + "</td>");
-                %>
-            </tr>
-        </table>
-            <% } %>
+    <br>
+    <br>
+    <table border="1">
+        <tr>
+            <th>Type</th>
+            <th>Højde (Antal klodser)</th>
+            <th>Længde (Antal prikker)</th>
+        </tr>
+        <tr>
+            <td>Dør</td>
+            <%
+                out.println("<td>" + door.getHeight() + "</td>");
+                out.println("<td>" + door.getLength() + "</td>");
+            %>
+        </tr>
+    </table>
+    <br>
+    <br>
+    <table border="1">
+        <tr>
+            <th>Type</th>
+            <th>Højde (Antal klodser)</th>
+            <th>Længde (Antal prikker)</th>
+        </tr>
+        <tr>
+            <td>Vindue</td>
+            <%
+                out.println("<td>" + window.getHeight() + "</td>");
+                out.println("<td>" + window.getLength() + "</td>");
+            %>
+        </tr>
+    </table>
     <br>
     <br>
     <table>
